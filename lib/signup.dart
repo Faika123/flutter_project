@@ -13,6 +13,8 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
@@ -21,7 +23,9 @@ class _SignupPageState extends State<SignupPage> {
       await users.add({
         'name': nameController.text,
         'email': emailController.text,
-        'password': passwordController.text, // Considérez le hachage du mot de passe
+        'password': passwordController.text, 
+        'phone': phoneController.text,
+        'address': addressController.text,
       });
       print("User Added");
       ScaffoldMessenger.of(context).showSnackBar(
@@ -38,6 +42,8 @@ class _SignupPageState extends State<SignupPage> {
     nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    phoneController.dispose();
+    addressController.dispose();
     super.dispose();
   }
 
@@ -115,6 +121,38 @@ class _SignupPageState extends State<SignupPage> {
                 decoration: InputDecoration(
                   labelText: 'Password',
                   prefixIcon: Icon(Icons.lock, color: Colors.blueAccent),
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                obscureText: true,
+              ),
+              SizedBox(height: 20),
+
+              TextField(
+                controller: phoneController,
+                decoration: InputDecoration(
+                  labelText: 'phone',
+                  prefixIcon: Icon(Icons.phone, color: Colors.blueAccent),
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                obscureText: true,
+              ),
+              SizedBox(height: 20),
+
+              TextField(
+                controller: addressController,
+                decoration: InputDecoration(
+                  labelText: 'address',
+                  prefixIcon: Icon(Icons.location_on, color: Colors.blueAccent),
                   filled: true,
                   fillColor: Colors.grey.shade100,
                   border: OutlineInputBorder(

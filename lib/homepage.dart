@@ -2,16 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'login.dart';
 import 'detailpage.dart';
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginPage(),
-    );
-  }
-}
+import 'profilepage.dart'; // Create this page separately
 
 class HomePage extends StatelessWidget {
   final List<Map<String, String>> items = [
@@ -46,12 +37,51 @@ class HomePage extends StatelessWidget {
             },
             child: Text(
               'Se connecter',
-              style: TextStyle(color: const Color.fromARGB(255, 252, 52, 2)),
+              style: TextStyle(color: Color.fromARGB(255, 252, 52, 2)),
             ),
           ),
         ],
       ),
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Profile'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.all(20),
@@ -78,18 +108,16 @@ class HomePage extends StatelessWidget {
                       SizedBox(width: 10),
                       IconButton(
                         icon: Icon(Icons.settings),
-                        onPressed: () {
-                          // Action à exécuter lors de l'appui sur l'icône de paramètres
-                        },
+                        onPressed: () {},
                       ),
                     ],
                   ),
                 ),
               ),
               SizedBox(height: 20),
-              // Première ligne de cartes horizontale
+              // First horizontal card row
               SizedBox(
-                height: 300, // Ajuste la hauteur pour les cartes
+                height: 300,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: items.length ~/ 2,
@@ -99,7 +127,6 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
-              // Section "Our Rooms" et "View All"
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
@@ -107,29 +134,21 @@ class HomePage extends StatelessWidget {
                   children: [
                     Text(
                       "Our Rooms",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                     TextButton(
-                      onPressed: () {
-                        // Action pour "View All"
-                      },
+                      onPressed: () {},
                       child: Text(
                         "View All",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.blue,
-                        ),
+                        style: TextStyle(fontSize: 16, color: Colors.blue),
                       ),
                     ),
                   ],
                 ),
               ),
-              // Deuxième ligne de cartes horizontale
+              // Second horizontal card row
               SizedBox(
-                height: 300, // Ajuste la hauteur pour les cartes
+                height: 300,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: items.length - (items.length ~/ 2),
@@ -159,7 +178,7 @@ class HomePage extends StatelessWidget {
         );
       },
       child: Container(
-        width: 200, // Largeur de chaque carte
+        width: 200,
         margin: EdgeInsets.only(right: 10),
         child: Card(
           shape: RoundedRectangleBorder(
@@ -168,10 +187,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               IconButton(
-                icon: FaIcon(
-                  FontAwesomeIcons.solidHeart,
-                  color: Colors.red,
-                ),
+                icon: FaIcon(FontAwesomeIcons.solidHeart, color: Colors.red),
                 onPressed: () {},
               ),
               Expanded(
@@ -187,7 +203,7 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              const Text(
+              Text(
                 "Bedroom in luxury Home",
                 textAlign: TextAlign.center,
                 style: TextStyle(
